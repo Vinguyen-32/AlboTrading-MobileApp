@@ -2,7 +2,7 @@
 ## PROTOTYPE
 [UI Design_AlboTrade Mobile App.pdf](https://github.com/Vinguyen-32/AlboTrading-MobileApp/files/8578550/UI.Design_AlboTrade.Mobile.App.pdf)
 ## TODO TASKS
-## Vi :
+## Vi : # 0, 5, 2
 ## Cami : (please input the task # here)
 ## Johnny : (please input the task # here)
 ### 0. Setup Database
