@@ -99,6 +99,9 @@ class DataProvider {
         "assets/images/img3.png",
         "assets/images/img4.png",
       ],
+      newPostImage: [
+
+      ],
     );
   }
 }

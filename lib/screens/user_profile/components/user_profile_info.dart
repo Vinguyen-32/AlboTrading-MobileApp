@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:plant_trading_app/constants.dart';
-import 'package:plant_trading_app/models/DataProvider.dart';
 import 'package:plant_trading_app/models/UserProfile.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -33,7 +32,7 @@ class UserProfileInfo extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(width: 2,),
                 Expanded(
                   flex: 6,
                   child: Column(
@@ -43,7 +42,7 @@ class UserProfileInfo extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w600,
-                          fontSize: 18,
+                          fontSize: 17,
                         ),
                       ),
                       SmoothStarRating(
@@ -52,7 +51,7 @@ class UserProfileInfo extends StatelessWidget {
                         rating: 4.5,
                         starCount: 5,
                         halfFilledIconData: Icons.star_half,
-                        size: 19.0,
+                        size: 18.0,
                         spacing: 0.0,
                       ),
                     ],
@@ -66,7 +65,7 @@ class UserProfileInfo extends StatelessWidget {
                         '5',
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
                           fontSize: 17,
                         ),
                       ),
@@ -74,8 +73,8 @@ class UserProfileInfo extends StatelessWidget {
                         'Trades',
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
                         ),
                       ),
                     ],
@@ -89,7 +88,7 @@ class UserProfileInfo extends StatelessWidget {
                         '3',
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
                           fontSize: 17,
                         ),
                       ),
@@ -97,8 +96,8 @@ class UserProfileInfo extends StatelessWidget {
                         'Bids',
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
                         ),
                       ),
                     ],
@@ -108,18 +107,20 @@ class UserProfileInfo extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10, right: 20),
+            padding: const EdgeInsets.only(top: 20, right: 20),
             child: Row(
               children: [
+                // Padding(
+                //   padding: const EdgeInsets.only(left:20.0),
                 Expanded(
-                  flex: 3,
+                  // flex: 2,
                   child: Column(
                     children: [
                       Text(
                         '145',
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
                           fontSize: 17,
                         ),
                       ),
@@ -127,22 +128,22 @@ class UserProfileInfo extends StatelessWidget {
                         'Followers',
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
                         ),
                       ),
                     ],
                   ),
                 ),
                 Expanded(
-                  flex: 3,
+                  // flex: 2,
                   child: Column(
                     children: [
                       Text(
                         '45',
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
                           fontSize: 17,
                         ),
                       ),
@@ -150,26 +151,26 @@ class UserProfileInfo extends StatelessWidget {
                         'Following',
                         style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
                         ),
                       ),
                     ],
                   ),
                 ),
+                SizedBox(width: 50,),
                 Expanded(
-                  flex: 3,
+                  // flex: 3,
                   child: SizedBox(
                     width: 70,
                     height: 40,
                     child: ElevatedButton(
-
                       onPressed: () {},
                       child: Text(
                         'Edit Profile',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 17,
+                          fontSize: 15,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -178,7 +179,6 @@ class UserProfileInfo extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ),
               ],
             ),
