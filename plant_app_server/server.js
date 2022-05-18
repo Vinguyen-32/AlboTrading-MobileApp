@@ -55,7 +55,7 @@ app.put('/users/:username', bodyParser, (req, res) => {
 
 app.get('/trading/:id', (req, res) => {
   let result = {
-    id:,
+    id: 1,
     username: "",
     firstName: "",
     lastName: "",
@@ -99,7 +99,7 @@ app.get('/trading/:id', (req, res) => {
 
 app.post('/trading/:id', bodyParser, (req, res) => {
   let request = {
-    id:,
+    id: 1,
     username: "",
     firstName: "",
     lastName: "",
@@ -111,9 +111,9 @@ app.post('/trading/:id', bodyParser, (req, res) => {
   res.send(request);
 })
 
-app.get('/bidding/:id' (req, res) => {
+app.get('/bidding/:id', (req, res) => {
   let result = {
-    id:,
+    id: 1,
     username: "",
     firstName: "",
     lastName: "",
@@ -123,8 +123,8 @@ app.get('/bidding/:id' (req, res) => {
       "url",
     ],
     biddingEnds:"",
-    biddingPrice:,
-    currentPrice:,
+    biddingPrice: 123,
+    currentPrice: 321,
     pickupStatus: "Available",
     shipping:"",
   }
@@ -133,12 +133,12 @@ app.get('/bidding/:id' (req, res) => {
 
 app.post('/bidding/:id', bodyParser, (req, res) => {
   let request = {
-    id:,
+    id: 1,
     username: "",
     firstName: "",
     lastName: "",
     title: "",
-    bidAmount: ,
+    bidAmount: 123 ,
   }
   res.send(request);
 })

@@ -14,8 +14,6 @@ class UserProfileInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // UserProfile userProfile = DataProvider().getUserProfileData();
-    // TODO: implement build
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -38,7 +36,7 @@ class UserProfileInfo extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Vi Nguyen',
+                        userProfile.name,
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w600,
@@ -48,8 +46,8 @@ class UserProfileInfo extends StatelessWidget {
                       SmoothStarRating(
                         allowHalfRating: true,
                         borderColor: kPrimaryColor,
-                        rating: 4.5,
-                        starCount: 5,
+                        rating: userProfile.stars.toDouble(),
+                        starCount: userProfile.stars,
                         halfFilledIconData: Icons.star_half,
                         size: 18.0,
                         spacing: 0.0,
@@ -62,7 +60,7 @@ class UserProfileInfo extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        '5',
+                        userProfile.trade.toString(),
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
@@ -85,7 +83,7 @@ class UserProfileInfo extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        '3',
+                        userProfile.bid.toString(),
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
@@ -117,7 +115,7 @@ class UserProfileInfo extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        '145',
+                        userProfile.followers.toString(),
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
@@ -140,7 +138,7 @@ class UserProfileInfo extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        '45',
+                        userProfile.following.toString(),
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w400,

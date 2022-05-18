@@ -6,15 +6,14 @@ import 'package:plant_trading_app/models/UserProfile.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class GalerySection extends StatelessWidget {
+  final UserProfile userProfileData;
 
-  // const RoundShortcutPost({
-  //   Key? key,
-  // }) : super(key: key);
+  GalerySection(this.userProfileData);
 
   @override
   Widget build(BuildContext context) {
-    // UserProfile userProfile = DataProvider().getUserProfileData();
-    // TODO: implement build
+    List<String> galeryImages = (userProfileData.galeryImages ?? []);
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -73,10 +72,10 @@ class GalerySection extends StatelessWidget {
             itemBuilder: (context, index) => Container(
               color: kPrimaryColor,
               child: Image.asset(
-                'assets/images/img.png',
+                galeryImages[index],
               ),
             ),
-            itemCount: 9,
+            itemCount: galeryImages.length,
           ),
         ],
       ),

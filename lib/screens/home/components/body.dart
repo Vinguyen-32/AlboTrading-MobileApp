@@ -6,15 +6,31 @@ import 'package:plant_trading_app/screens/home/components/post_card.dart';
 
 import 'package:plant_trading_app/screens/home/components/title_with_more_btn.dart';
 
+import '../../../models/Post.dart';
 import 'header_with_searchbox.dart';
 import 'title_with_more_btn.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  const Body({Key? key}) : super(key: key);
+
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  late Future<List<Post>> futurePosts;
+
+  @override
+  void initState() {
+    super.initState();
+    futurePosts = DataProvider().getPostData2();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Provides total height and width of the screen
     Size size = MediaQuery.of(context).size;
-    List postData = DataProvider().getPostData();
+    // List postData = DataProvider().getPostData();
 
     // enables scrolling on small device
     return SingleChildScrollView(
@@ -31,12 +47,32 @@ class Body extends StatelessWidget {
           //   ),
           // )
 
-          ...postData.map((post) {
-            return PostCard(
-              post: post,
-              press: () {},
-            );
-          })
+          FutureBuilder<List<Post>>(
+            future: futurePosts,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<Widget> posts = [];
+                snapshot.data!.forEach(
+                  (post) => {
+                    posts.add(
+                      PostCard(
+                        post: post,
+                        press: () {},
+                      ),
+                    )
+                  },
+                );
+                return Column(
+                  children: posts,
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+
+              // By default, show a loading spinner.
+              return const CircularProgressIndicator();
+            },
+          )
 
           // ListView.builder(
           //   shrinkWrap: true,
@@ -50,14 +86,3 @@ class Body extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -37,7 +37,7 @@ class PostCard extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 24,
-                          backgroundImage: AssetImage(post.image),
+                          backgroundImage: NetworkImage(post.image)//AssetImage(post.image),
                         ),
                         if(post.isActive)
                           Positioned(
@@ -108,7 +108,7 @@ class PostCard extends StatelessWidget {
                 return Builder(
                     builder: (BuildContext context) {
                       return ClipRRect(
-                          child: Image.asset(i),
+                          child: Image.network(i),
                           borderRadius: BorderRadius.circular(8)
                       );
                     }

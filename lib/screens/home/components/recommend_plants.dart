@@ -5,47 +5,74 @@ import 'package:plant_trading_app/models/DataProvider.dart';
 import 'package:plant_trading_app/screens/bidding_details/bidding_details_screen.dart';
 import 'package:plant_trading_app/screens/trading_details/trading_details_screen.dart';
 
-class RecommendsPlants extends StatelessWidget {
-  const RecommendsPlants({
-    Key? key,
-  }) : super(key: key);
+import '../../../models/NearByPost.dart';
+import '../../../models/Post.dart';
+
+class RecommendsPlants extends StatefulWidget {
+  const RecommendsPlants({Key? key}) : super(key: key);
+
+  @override
+  _RecommendsPlantsState createState() => _RecommendsPlantsState();
+}
+
+class _RecommendsPlantsState extends State<RecommendsPlants> {
+  late Future<List<NearByPost>> futurePosts;
+
+  @override
+  void initState() {
+    super.initState();
+    futurePosts = DataProvider().getNearByPostData();
+  }
 
   @override
   Widget build(BuildContext context) {
-    List nearByData = DataProvider().getNearByPostData();
+    // List nearByData = DataProvider().getNearByPostData();
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          ...nearByData.map((post){
-            return RecommendPlantCard(
-              image: post.image,
-              plantName: post.plantName,
-              account: post.author,
-              type: post.type as String,
-              press: () {
-                if (post.type.toString() == "TRADING") {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TradingDetailsScreen(),
-                    ),
+
+    return FutureBuilder<List<NearByPost>>(
+      future: futurePosts,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                ...snapshot.data!.map((post){
+                  return RecommendPlantCard(
+                    image: post.image,
+                    plantName: post.plantName,
+                    account: post.author,
+                    type: post.type as String,
+                    press: () {
+                      if (post.type.toString() == "TRADING") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TradingDetailsScreen(),
+                          ),
+                        );
+                      } else if (post.type.toString() == "BIDDING") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BiddingDetailsScreen(),
+                          ),
+                        );
+                      }
+                    },
+                    price: post.price ?? 0,
                   );
-                } else if (post.type.toString() == "BIDDING") {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BiddingDetailsScreen(),
-                    ),
-                  );
-                }
-              },
-              price: post.price,
-            );
-          }),
-        ],
-      ),
+                }),
+              ],
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+
+        // By default, show a loading spinner.
+        return const CircularProgressIndicator();
+      },
     );
   }
 }

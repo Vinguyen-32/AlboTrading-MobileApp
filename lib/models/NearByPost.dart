@@ -1,3 +1,5 @@
+import 'package:timeago/timeago.dart' as timeago;
+
 class NearByPost {
   final String plantName, author, image, time, type;
   final int? price;
@@ -12,4 +14,16 @@ class NearByPost {
     this.time = '',
     this.isLocal = false,
   });
+
+  factory NearByPost.fromJson(Map<String, dynamic> json) {
+    return NearByPost(
+      plantName: json['plantName'],
+      author: json['author'],
+      type: json['type'],
+      price: json['price'],
+      image: json['image'],
+      time: timeago.format(DateTime.parse(json['time'])),
+      isLocal: json['isLocal'],
+    );
+  }
 }

@@ -7,11 +7,16 @@ import 'package:plant_trading_app/screens/user_profile/components/user_profile_i
 import 'galery_section.dart';
 
 class Body extends StatelessWidget {
+
+  final UserProfile userProfileData;
+
+  Body(this.userProfileData);
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     Size size = MediaQuery.of(context).size;
-    UserProfile userProfileData = DataProvider().getUserProfileData();
+    // UserProfile userProfileData = DataProvider().getUserProfileData();
 
     return SingleChildScrollView(
         child: Column(
@@ -20,7 +25,7 @@ class Body extends StatelessWidget {
             SizedBox(height: 12),
             RoundShortcutPost(),
             SizedBox(height: 24),
-            GalerySection(),
+            GalerySection(userProfileData),
           ],
         ),
     );
