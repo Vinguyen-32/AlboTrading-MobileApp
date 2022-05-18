@@ -12,18 +12,18 @@ class HeaderWithSearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container (
-      margin: EdgeInsets.only(bottom: kDefaultPadding * 2.5),
+      margin: EdgeInsets.only(bottom: kDefaultPadding * 1.25),
       // It will cover 20% of total height
-      height: size.height * 0.2,
+      height: size.height * 0.1,
       child: Stack (
         children: <Widget>[
           Container (
             padding: EdgeInsets.only(
               left: kDefaultPadding,
               right: kDefaultPadding,
-              bottom: 36 + kDefaultPadding,
+              // bottom: 36 + kDefaultPadding,
             ),
-            height: size.height * 0.2 - 27,
+            height: size.height * 0.1 - 30,
             decoration: BoxDecoration(
               color: kPrimaryColor,
               borderRadius: BorderRadius.only(
@@ -31,19 +31,19 @@ class HeaderWithSearchBox extends StatelessWidget {
                 bottomRight: Radius.circular(36),
               ), // BorderRadius.only
             ),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'Hi AlboTrader!',
-                  style: Theme.of(context).textTheme.headline5?.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                Spacer(),
-              ],
-            ),
+            // child: Row(
+            //   children: <Widget>[
+            //     Text(
+            //       'Hi AlboTrader!',
+            //       style: Theme.of(context).textTheme.headline5?.copyWith(
+            //           color: Colors.white, fontWeight: FontWeight.bold),
+            //     ),
+            //     Spacer(),
+            //   ],
+            // ),
           ),
           Positioned(
-            bottom: 0,
+            bottom: size.height * 0.01,
             left: 0,
             right: 0,
             child: Container(

@@ -72,8 +72,8 @@ class RecommendPlantCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(
         left: kDefaultPadding,
-        top: kDefaultPadding / 2,
-        bottom: kDefaultPadding * 2.5,
+        top: kDefaultPadding,
+        bottom: kDefaultPadding * 1.25,
       ),
       width: size.width * 0.4,
       child: Column(

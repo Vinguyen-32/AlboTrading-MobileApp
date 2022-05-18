@@ -20,7 +20,7 @@ class UserProfileInfo extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20, top: 10),
+            padding: const EdgeInsets.only(left: 20, top: 15),
             child: Row(
               children: [
                 ClipOval(

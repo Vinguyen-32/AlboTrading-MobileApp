@@ -20,7 +20,7 @@ class PostCard extends StatelessWidget {
       onTap: press,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: kDefaultPadding, vertical: kDefaultPadding * 0.85
+            horizontal: kDefaultPadding,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,6 +115,24 @@ class PostCard extends StatelessWidget {
                 );
               }).toList(),
             ),
+            SizedBox(height: kDefaultPadding,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FlatButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  color: kPrimaryColor,
+                  onPressed: press,
+                  child: Text(
+                    "Start Bidding",
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+            const Divider(),
           ],
         ),
       ),

@@ -15,6 +15,15 @@ class TradeListingScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'New Listing',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
+          ),
+        ),
         backgroundColor: kPrimaryColor,
         elevation: 0,
         leading: IconButton(
@@ -41,8 +50,8 @@ class TradeListingScreen extends StatelessWidget {
               "Post",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
               ),
             ),
           ),

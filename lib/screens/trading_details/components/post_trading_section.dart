@@ -33,7 +33,7 @@ class PostTradingSection extends StatelessWidget {
                 ),
               ),
               Text(
-                "  Public Meetup - ",
+                "  Local Pickup - ",
                 style: TextStyle(
                   color: Colors.grey[800],
                 ),

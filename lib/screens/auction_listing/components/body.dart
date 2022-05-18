@@ -36,7 +36,6 @@ class Body extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 UserAccount(),
-                ListingDetails(),
                 AuctionDetails(),
               ],
             ),

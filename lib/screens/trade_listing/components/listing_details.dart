@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plant_trading_app/constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -78,7 +79,11 @@ class _ListingDetailsState extends State<ListingDetails> {
               SizedBox(
                 height: 20,
               ),
-              locationTextField(),
+              LocationTextField(),
+              SizedBox(
+                height: 20,
+              ),
+              ShippingTextField(),
               SizedBox(
                 height: 20,
               ),
@@ -185,26 +190,6 @@ Widget titleTextField() {
   );
 }
 
-Widget locationTextField() {
-  return Flexible(
-    child: TextFormField(
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black26,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: kPrimaryColor,
-          ),
-        ),
-        labelText: "Meetup Location",
-        helperText: "Location can be empty",
-      ),
-    ),
-  );
-}
 
 Widget descriptionTextField() {
   return TextFormField(
@@ -228,3 +213,105 @@ Widget descriptionTextField() {
   );
 }
 
+
+class LocationTextField extends StatefulWidget {
+  const LocationTextField({Key? key}) : super(key: key);
+
+  @override
+  State<LocationTextField> createState() => _LocationTextFieldState();
+}
+
+class _LocationTextFieldState extends State<LocationTextField> {
+  String dropdownValue = 'Not Available';
+  String labelText = 'Local Pickup';
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<String>(
+      // value: labelText,
+      hint: Text(labelText),
+      icon: const Icon(Icons.arrow_drop_down),
+      elevation: 16,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black26,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: kPrimaryColor,
+          ),
+        ),
+      ),
+      // style: const TextStyle(color: Colors.deepPurple),
+      // underline: Container(
+      //   height: 2,
+      //   color: Colors.deepPurpleAccent,
+      // ),
+      onChanged: (String? newValue) {
+        setState(() {
+          dropdownValue = newValue!;
+        });
+      },
+      items: <String>['Not Available', 'Public Meetup', "Seller's Door Pickup", "Buyer's Door Dropoff"]
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class ShippingTextField extends StatefulWidget {
+  const ShippingTextField({Key? key}) : super(key: key);
+
+  @override
+  State<ShippingTextField> createState() => _ShippingTextFieldState();
+}
+
+class _ShippingTextFieldState extends State<ShippingTextField> {
+  String dropdownValue = 'Not Available';
+  String labelText = 'Shipping';
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<String>(
+      // value: labelText,
+      hint: Text(labelText),
+      icon: const Icon(Icons.arrow_drop_down),
+      elevation: 16,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black26,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: kPrimaryColor,
+          ),
+        ),
+      ),
+      // style: const TextStyle(color: Colors.deepPurple),
+      // underline: Container(
+      //   height: 2,
+      //   color: Colors.deepPurpleAccent,
+      // ),
+      onChanged: (String? newValue) {
+        setState(() {
+          dropdownValue = newValue!;
+        });
+      },
+      items: <String>['Not Available', 'Free Economy Shipping', "Buyer Pays for Shipping"]
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+}

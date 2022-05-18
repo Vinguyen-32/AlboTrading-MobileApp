@@ -23,7 +23,7 @@ class Body extends StatelessWidget {
           HeaderWithSearchBox(size: size),
           TitleWithMoreBtn(title: "Popular Nearby", press: () {}),
           RecommendsPlants(),
-          TitleWithMoreBtn(title: "Trending", press: () {}),
+          TitleWithMoreBtn(title: "Your Feed", press: () {}),
           // Expanded(
           //   child: ListView.builder(
           //     itemCount: postsData.length,
