@@ -37,7 +37,7 @@ class PostCard extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 24,
-                          backgroundImage: NetworkImage(post.image)//AssetImage(post.image),
+                          backgroundImage: NetworkImage(post.profileImage)//AssetImage(post.image),
                         ),
                         if(post.isActive)
                           Positioned(
@@ -65,28 +65,45 @@ class PostCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              post.name,
+                              post.username,
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w300,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                             SizedBox(
                               height: 6,
                             ),
-                            Text(
-                              post.location,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w100,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  post.location,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  post.time,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Text(post.time),
+                    // Text(
+                    //   post.time,
+                    //   style: TextStyle(
+                    //     fontSize: 14,
+                    //     fontWeight: FontWeight.w400,
+                    //   ),
+                    // ),
                   ],
                 ),
               ],

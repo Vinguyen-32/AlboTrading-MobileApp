@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 
 class DataProvider {
-  final SERVER_BASE_URL = "http://192.168.1.20:8080";
+  final SERVER_BASE_URL = "http://192.168.1.14:8080";
   DataProvider();
 
   Future<List<Post>> getPostData2() async {
@@ -28,10 +28,10 @@ class DataProvider {
   List getPostData() {
     return [
       Post(
-        name: "Jenny",
+        username: "Jenny",
         location: "San Jose",
         caption: "Monstera Albo Fully Rooted Plant",
-        image: "assets/images/img.png",
+        profileImage: "assets/images/img.png",
         time: "3m ago",
         postImages: [
           "assets/images/img2.png",
@@ -41,10 +41,10 @@ class DataProvider {
         isActive: true,
       ),
       Post(
-        name: "Vi Nguyen",
+        username: "Vi Nguyen",
         location: "San Francisco",
         caption: "Monstera Albo Fully Rooted Plant",
-        image: "assets/images/img.png",
+        profileImage: "assets/images/img.png",
         time: "3m ago",
         postImages: [
           "assets/images/img2.png",
@@ -54,10 +54,10 @@ class DataProvider {
         isActive: false,
       ),
       Post(
-        name: "Lisa",
+        username: "Lisa",
         location: "San Jose",
         caption: "Monstera Albo Fully Rooted Plant",
-        image: "assets/images/img.png",
+        profileImage: "assets/images/img.png",
         time: "3m ago",
         postImages: [
           "assets/images/img1.jpg",
@@ -97,8 +97,9 @@ class DataProvider {
   UserProfile getUserProfileData() {
     return UserProfile(
       profileImage: "assets/images/img1.jpg",
-      name: "Vi Nguyen",
-      accountName: "samvi32",
+      firstName: "Vi",
+      lastName: "Nguyen",
+      username: "samvi32",
       followers: 190,
       following: 32,
       reviews: 23,

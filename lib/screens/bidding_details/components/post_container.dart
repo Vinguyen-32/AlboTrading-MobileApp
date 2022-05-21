@@ -31,7 +31,7 @@ class PostContainer extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 24,
-                      backgroundImage: AssetImage(post.image),
+                      backgroundImage: AssetImage(post.profileImage),
                     ),
                     if(post.isActive)
                       Positioned(
@@ -58,7 +58,7 @@ class PostContainer extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              post.name,
+                              post.username,
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,

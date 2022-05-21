@@ -37,9 +37,9 @@ class _BodyState extends State<Body> {
       child: Column(
         children: <Widget>[
           HeaderWithSearchBox(size: size),
-          TitleWithMoreBtn(title: "Popular Nearby", press: () {}),
+          TitleWithMoreBtn(title: "Popular Auctions ", press: () {}),
           RecommendsPlants(),
-          TitleWithMoreBtn(title: "Your Feed", press: () {}),
+          TitleWithMoreBtn(title: "Trending Trades", press: () {}),
           // Expanded(
           //   child: ListView.builder(
           //     itemCount: postsData.length,

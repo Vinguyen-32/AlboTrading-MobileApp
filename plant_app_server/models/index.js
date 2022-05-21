@@ -6,7 +6,7 @@ const User = require('./user');
 const Post = require('./post');
 
 const USERNAME = "root";
-const PASSWORD = "Tranvuhieu123"//"cmpe137";
+const PASSWORD = "cmpe137";
 
 const sequelize = new Sequelize("cmpe137", USERNAME, PASSWORD, {
     host: "localhost",

@@ -1,30 +1,30 @@
 import 'package:timeago/timeago.dart' as timeago;
 
 class Post {
-  final String name, location, caption, image, time;
+  final String username, location, caption, profileImage, time;
   final List<String>? postImages;
   final bool isActive;
 
   Post({
-    this.name = '',
+    this.username = '',
     this.location = '',
     this.caption = '',
-    this.image = '',
+    this.profileImage = '',
     this.time = '',
     this.postImages = const[],
     this.isActive = false,
   });
 
    factory Post.fromJson(Map<String, dynamic> json) {
-     List<String> images = [];
-     json['images'].forEach((item) => images.add(item.toString()));
+     List<String> postImages = [];
+     json['postImages'].forEach((item) => postImages.add(item.toString()));
      return Post(
-       name:  json['name'],
+       username:  json['username'],
        location: json['location'],
        caption: json['caption'],
-       image: images[0],
+       profileImage: json['profileImage'],
        time:  timeago.format(DateTime.parse(json['time'])),
-       postImages: images,
+       postImages: postImages,
        isActive: json['isActive'],
      );
   }

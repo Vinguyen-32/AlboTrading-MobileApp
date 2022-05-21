@@ -36,7 +36,7 @@ class UserProfileInfo extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        userProfile.name,
+                        userProfile.firstName + " " + userProfile.lastName,
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w600,

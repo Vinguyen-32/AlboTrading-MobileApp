@@ -39,9 +39,10 @@ class _RecommendsPlantsState extends State<RecommendsPlants> {
               children: [
                 ...snapshot.data!.map((post){
                   return RecommendPlantCard(
-                    image: post.image,
-                    plantName: post.plantName,
-                    account: post.author,
+                    postImage: post.postImages[0],
+                    title: post.title,
+                    username: post.username,
+                    profileImage: post.profileImage,
                     type: post.type as String,
                     press: () {
                       if (post.type.toString() == "TRADING") {
@@ -60,7 +61,7 @@ class _RecommendsPlantsState extends State<RecommendsPlants> {
                         );
                       }
                     },
-                    price: post.price ?? 0,
+                    currentBid: post.currentBid ?? 0,
                   );
                 }),
               ],
@@ -80,16 +81,17 @@ class _RecommendsPlantsState extends State<RecommendsPlants> {
 class RecommendPlantCard extends StatelessWidget {
   const RecommendPlantCard({
     Key? key,
-    required this.image,
+    required this.postImage,
     required this.type,
-    required this.plantName,
-    required this.account,
-    required this.price,
+    required this.title,
+    required this.username,
+    required this.profileImage,
+    required this.currentBid,
     required this.press,
   }) : super(key: key);
 
-  final String image, type, plantName, account;
-  final int price;
+  final String postImage, type, title, username, profileImage;
+  final int currentBid;
   final void Function() press;
 
   @override
@@ -113,7 +115,7 @@ class RecommendPlantCard extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(image),
+                image: AssetImage(postImage),
               ),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
@@ -152,16 +154,20 @@ class RecommendPlantCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "$plantName\n".toUpperCase(),
+                    "$title\n".toUpperCase(),
                     style: Theme.of(context).textTheme.button,
                   ),
                   Row(
                     children: <Widget>[
+                      CircleAvatar(
+                          radius: 20,
+                          backgroundImage: NetworkImage("$profileImage"),//AssetImage(post.image),
+                      ),
                       RichText(
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: "$account",
+                              text: "$username",
                               style: TextStyle(
                                 color: kPrimaryColor.withOpacity(0.5),
                               ),
@@ -172,7 +178,7 @@ class RecommendPlantCard extends StatelessWidget {
                       Spacer(),
                       // type == "TRADDING" ?
                       Text(
-                        '\$$price',
+                        '\$$currentBid',
                         style: Theme.of(context)
                             .textTheme
                             .button
@@ -183,6 +189,12 @@ class RecommendPlantCard extends StatelessWidget {
                   ),
                 ],
               ),
+
+
+
+
+
+
 
               // child: Row(
               //   children: <Widget>[
