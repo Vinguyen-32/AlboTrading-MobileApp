@@ -1,7 +1,7 @@
 import 'Post.dart';
 
 class UserProfile {
-  final String firstName, lastName, username, profileImage;
+  final String name, accountName, profileImage;
   final int following, followers, reviews, stars, trade, bid;
   final List<String>? galeryImages;
   final List<String> newPostImage;
@@ -10,9 +10,8 @@ class UserProfile {
 
   UserProfile({
     this.profileImage = '',
-    this.firstName = '',
-    this.lastName = '',
-    this.username = '',
+    this.name = '',
+    this.accountName = '',
     this.followers = 0,
     this.following = 0,
     this.reviews = 0,
@@ -27,9 +26,8 @@ class UserProfile {
   factory UserProfile.fromJson(Map<String, dynamic> json) {
     return UserProfile(
       profileImage: json['profileImage'],
-      firstName: json['firstname'],
-      lastName: json['lastName'],
-      username: json['username'],
+      name: json['name'],
+      accountName: json['accountName'],
       followers: json['followers'],
       following: json['following'],
       postType: json['postType'],

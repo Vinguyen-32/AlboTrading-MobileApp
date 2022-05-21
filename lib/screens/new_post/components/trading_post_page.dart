@@ -7,9 +7,6 @@ import '../../../constants.dart';
 class TradingPostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    List postData = DataProvider().getPostData();
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: kPrimaryColor,

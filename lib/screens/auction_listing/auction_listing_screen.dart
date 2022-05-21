@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:plant_trading_app/models/DataProvider.dart';
 import 'package:plant_trading_app/models/UserProfile.dart';
+import '../user_profile/user_profile_screen.dart';
 import 'components/body.dart';
 
 import '../../../constants.dart';
 
 class AuctionListingScreen extends StatefulWidget {
-
   const AuctionListingScreen({
     Key? key,
     required this.currentUser,
@@ -23,11 +24,34 @@ class AuctionListingScreen extends StatefulWidget {
 class _AuctionListingScreenState extends State<AuctionListingScreen> {
   bool isPosting = false;
 
+  final TextEditingController _titleBoxController = TextEditingController();
+  final TextEditingController _priceBoxController = TextEditingController();
+  final TextEditingController _descriptionBoxController =
+      TextEditingController();
+  String durationOption = '';
+  String locationOption = '';
+  String shippingOption = '';
+  List<XFile> selectedImages = [];
+
+  void setDurationOption(String value) {
+    durationOption = value;
+  }
+
+  void setLocationOption(String value) {
+    locationOption = value;
+  }
+
+  void setShippingOption(String value) {
+    shippingOption = value;
+  }
+
+  void setSelectedImages(List<XFile> value) {
+    selectedImages = value;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     List postData = DataProvider().getPostData();
 
     return Scaffold(
@@ -72,21 +96,57 @@ class _AuctionListingScreenState extends State<AuctionListingScreen> {
               ),
             ),
           ),
-          SizedBox(width: kDefaultPadding / 2,),
+          SizedBox(
+            width: kDefaultPadding / 2,
+          ),
         ],
       ),
       body: ListView(
         children: <Widget>[
-          isPosting ? LinearProgressIndicator(value: 0.7,) : Text(""),
-          Body()
+          isPosting
+              ? LinearProgressIndicator(
+                  value: 0.7,
+                )
+              : Text(""),
+          Body(
+            _titleBoxController,
+            _priceBoxController,
+            _descriptionBoxController,
+            setDurationOption,
+            setLocationOption,
+            setShippingOption,
+            setSelectedImages,
+          ),
         ],
       ),
     );
   }
+
   handleSubmit() {
     setState(() {
       isPosting = true;
     });
+
+    Future.wait([
+      DataProvider().createPost(
+        _titleBoxController.text,
+        'BIDDING',
+        '',
+        _descriptionBoxController.text,
+        selectedImages,
+        durationOption,
+        locationOption,
+        shippingOption,
+      )
+    ]);
+
+    setState(() {
+      isPosting = false;
+    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => UserProfileScreen()),
+    );
   }
 }
 

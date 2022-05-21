@@ -31,7 +31,7 @@ class PostContainer extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 24,
-                      backgroundImage: AssetImage(post.profileImage),
+                      backgroundImage: NetworkImage(post.avatar == '' ? 'https://e7.pngegg.com/pngimages/442/477/png-clipart-computer-icons-user-profile-avatar-profile-heroes-profile.png' : post.avatar),
                     ),
                     if(post.isActive)
                       Positioned(
@@ -58,7 +58,7 @@ class PostContainer extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              post.username,
+                              post.author,
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -153,7 +153,7 @@ class _CachedImage extends State<CachedImage> {
               return Builder(
                   builder: (BuildContext context) {
                     return ClipRRect(
-                      child: Image.asset(i),
+                      child: Image.network(i),
                       // borderRadius: BorderRadius.circular(8)
                     );
                   }

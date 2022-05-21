@@ -6,13 +6,18 @@ import 'package:plant_trading_app/screens/home/components/title_with_more_btn.da
 import 'package:plant_trading_app/screens/trading_details/components/post_trading_section.dart';
 import 'package:plant_trading_app/screens/trading_details/components/title_with_expand_btn_and_traded_plants.dart';
 
+import '../../../models/Post.dart';
+
 class Body extends StatelessWidget {
+  final Post post;
+
+  const Body({
+    Key? key,
+    required this.post,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    Size size = MediaQuery.of(context).size;
-    List postData = DataProvider().getPostData();
-
     return SingleChildScrollView(
       child: Column(children: <Widget>[
         Container(
@@ -21,14 +26,14 @@ class Body extends StatelessWidget {
           color: Colors.white,
           child: Column(
             children: [
-              PostContainer(post: postData[1]),
+              PostContainer(post: post),
               SizedBox(height: 10),
               const Divider(),
-              TitleWithExpandBtnAndTradedPlants(title: "Traded Plants"),
+              TitleWithExpandBtnAndTradedPlants(title: "Traded Plants", postId: post.id),
               const Divider(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: PostTradingSection(post: postData[1]),
+                child: PostTradingSection(post: post),
               ),
 
 

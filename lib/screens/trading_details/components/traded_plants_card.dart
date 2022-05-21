@@ -36,7 +36,7 @@ class TrandedPlantsCard extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(image),
+                image: NetworkImage(image),
               ),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),

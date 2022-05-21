@@ -39,29 +39,31 @@ class _RecommendsPlantsState extends State<RecommendsPlants> {
               children: [
                 ...snapshot.data!.map((post){
                   return RecommendPlantCard(
-                    postImage: post.postImages[0],
-                    title: post.title,
-                    username: post.username,
-                    profileImage: post.profileImage,
+                    image: post.image,
+                    plantName: post.plantName,
+                    account: post.author,
                     type: post.type as String,
+                    id: post.id,
                     press: () {
+                      print("post.type.toString(): " + post.type.toString());
                       if (post.type.toString() == "TRADING") {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TradingDetailsScreen(),
+                            builder: (context) => TradingDetailsScreen(postId: post.id),
                           ),
                         );
                       } else if (post.type.toString() == "BIDDING") {
+                        print("before click: " + post.id);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BiddingDetailsScreen(),
+                            builder: (context) => BiddingDetailsScreen(postId: post.id),
                           ),
                         );
                       }
                     },
-                    currentBid: post.currentBid ?? 0,
+                    price: post.price ?? 0,
                   );
                 }),
               ],
@@ -81,17 +83,17 @@ class _RecommendsPlantsState extends State<RecommendsPlants> {
 class RecommendPlantCard extends StatelessWidget {
   const RecommendPlantCard({
     Key? key,
-    required this.postImage,
+    required this.image,
     required this.type,
-    required this.title,
-    required this.username,
-    required this.profileImage,
-    required this.currentBid,
+    required this.plantName,
+    required this.account,
+    required this.price,
     required this.press,
+    required this.id,
   }) : super(key: key);
 
-  final String postImage, type, title, username, profileImage;
-  final int currentBid;
+  final String image, type, plantName, account, id;
+  final int price;
   final void Function() press;
 
   @override
@@ -115,7 +117,7 @@ class RecommendPlantCard extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(postImage),
+                image: AssetImage(image),
               ),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
@@ -154,20 +156,16 @@ class RecommendPlantCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "$title\n".toUpperCase(),
+                    "$plantName\n".toUpperCase(),
                     style: Theme.of(context).textTheme.button,
                   ),
                   Row(
                     children: <Widget>[
-                      CircleAvatar(
-                          radius: 20,
-                          backgroundImage: NetworkImage("$profileImage"),//AssetImage(post.image),
-                      ),
                       RichText(
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: "$username",
+                              text: "$account",
                               style: TextStyle(
                                 color: kPrimaryColor.withOpacity(0.5),
                               ),
@@ -178,7 +176,7 @@ class RecommendPlantCard extends StatelessWidget {
                       Spacer(),
                       // type == "TRADDING" ?
                       Text(
-                        '\$$currentBid',
+                        '\$$price',
                         style: Theme.of(context)
                             .textTheme
                             .button
@@ -189,12 +187,6 @@ class RecommendPlantCard extends StatelessWidget {
                   ),
                 ],
               ),
-
-
-
-
-
-
 
               // child: Row(
               //   children: <Widget>[

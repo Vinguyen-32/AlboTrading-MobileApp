@@ -1,34 +1,83 @@
 'use strict';
 
 const DB = require('../models');
+const multiparty = require('multiparty');
+const fs = require('fs');
+const path = require('path');
+const moment = require('moment');
+const _ = require('lodash');
+const host = 'http://192.168.1.17:8080';
+
 
 const createPost = async (req, res) => {
-    try {
+    new multiparty.Form().parse(req, async function(err, fields, files) {
         const id = req.params.id;
-        const {
-            type,
-            location,
-            title,
-            caption,
-            images
-        } = req.body || {};
+        const type = fields['type'][0];
+        const location = fields['location'][0];
+        const title = fields['title'][0];
+        const caption = fields['caption'][0];
 
+        let filenames = [];
+
+        (files.images || []).forEach(function(file) {
+            const name = file.originalFilename.split('/').slice(-1)[0];
+            fs.copyFileSync(file.path, `${path.resolve('./public/')}/${name}`);
+            filenames.push(name);
+        });
+        
         const users = await DB.User.findAll({
             where: {
                 id
             }
         });
 
-        // const post = await DB.Post.create({
-        //     type,
-        //     location,
-        //     title,
-        //     caption,
-        //     images,
-        //     time: new Date(),
-        //     isActive: true,
-        //     UserId: users[0].id
-        // })
+        const post = await DB.Post.create({
+            type,
+            location,
+            title,
+            caption,
+            images: filenames.map((item) => { return `${host}/${item}`}),
+            time: new Date(),
+            isActive: true,
+            UserId: users[0].id
+        })
+
+        res.send(post);
+    });
+}
+
+const viewPost = async (req, res) => {
+    try {
+        const { postId } = req.params || {};
+        const posts = await DB.Post.findAll({
+            where: {
+                id: postId,
+            },
+            include: [{
+                model: DB.User
+            }]
+        });
+        
+        let post = JSON.parse(JSON.stringify(posts[0]));
+        
+        let highestBid;
+        if (post.type == 'BIDDING'){
+            highestBid = await DB.Bid.findAll({
+                limit: 1,
+                where: {
+                    PostId: postId,
+                },
+                order: [
+                    ['amount', 'DESC'],
+                ]
+            });
+        }
+        post.author = post.User.firstName + " " + post.User.lastName;
+        post.avatar = post.User.image;
+        post.price = `${_.get(highestBid, "[0]amount") || _.get(post, "data.basePrice")}`;
+        post.endAt = moment().add("day", 7);
+        delete post.User;
+        delete post.data;
 
         res.send(post);
     } catch (error) {
@@ -43,7 +92,7 @@ const getPost = async (req, res) => {
             where: {
                 id: postId,
                 UserId: id
-            }
+            },
         });
 
         res.send(posts[0]);
@@ -57,7 +106,7 @@ const getPosts = async (req, res) => {
         const { id, postId } = req.params || {};
         let posts = await DB.Post.findAll({
             where: {
-                UserId: id
+                UserId: 2
             }
         });
 
@@ -72,7 +121,7 @@ const getPosts = async (req, res) => {
             post.name = `${user[0].firstName} ${user[0].lastName}`;
             return post;
         })
-
+        console.log("possss: " + JSON.stringify(posts, null, 4))
         res.send(posts);
     } catch (error) {
         res.status(400).send(error.message);
@@ -134,7 +183,6 @@ const getNearbyPosts = async (req, res) => {
             type: "TRADING",
             isLocal: true,
         }]
-        console.log(mock)
         res.send(mock);
     } catch (error) {
         res.status(400).send(error.message);
@@ -145,9 +193,9 @@ const getPopularPosts = async (req, res) => {
     try {
         const { id, postId } = req.params || {};
         const posts = await DB.Post.findAll({
-            where: {
-                UserId: id
-            }
+            // where: {
+            //     UserId: id
+            // }
         });
 
         res.send(posts);
@@ -156,11 +204,122 @@ const getPopularPosts = async (req, res) => {
     }
 }
 
+const placeBid = async (req, res) => {
+    try {
+        const { id, postId } = req.params || {};
+        const amount = req.body.amount;
+        
+        const posts = await DB.Post.findAll({
+            where: {
+                id: postId
+            }
+        });
+
+        const users = await DB.User.findAll({
+            where: {
+                id: id
+            }
+        })
+
+        const post = posts[0];
+        const user = users[0];
+
+
+        const bid = await DB.Bid.create({
+            PostId: parseInt(postId),
+            UserId: parseInt(id),
+            amount: parseFloat(amount)
+        })
+
+
+        res.send(posts);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const offerTrade = async (req, res) => {
+    new multiparty.Form().parse(req, async function(err, fields, files) {
+        const title = fields['title'][0];
+
+        const { id, postId } = req.params || {};
+        
+        const posts = await DB.Post.findAll({
+            where: {
+                id: postId
+            }
+        });
+
+        const users = await DB.User.findAll({
+            where: {
+                id: id
+            }
+        })
+
+        const post = posts[0];
+        const user = users[0];
+
+
+        let filenames = [];
+
+        (files.images || []).forEach(function(file) {
+            const name = file.originalFilename.split('/').slice(-1)[0];
+            fs.copyFileSync(file.path, `${path.resolve('./public/')}/${name}`);
+            filenames.push(name);
+        });
+        
+        const offer = await DB.Offer.create({
+            images: filenames.map((item) => { return `${host}/${item}`}),
+            title,
+            PostId: post.id,
+            UserId: user.id
+        })
+
+        res.send(offer);
+    });
+}
+
+const getOffer = async (req, res) => {
+    try {
+        const { postId } = req.params || {};
+        const posts = await DB.Post.findAll({
+            where: {
+                id: postId
+            }
+        });
+
+        const offers = await DB.Offer.findAll({
+            where: {
+                PostId: posts[0].id
+            },
+            include: [{
+                model: DB.User
+            }]
+        })
+
+        let result = JSON.parse(JSON.stringify(offers));
+        result.map((item, i) => {
+            result[i].name = `${item.User.firstName} ${item.User.lastName}`
+            delete result[i].User;
+        })
+
+        res.send(result);
+    } catch (error) {
+
+        console.log(error)
+        res.status(400).send(error.message);
+    }
+}
+
 module.exports = {
     createPost,
     getPost,
     getPosts,
+    viewPost,
     editPost,
     getNearbyPosts,
-    getPopularPosts
+    getPopularPosts,
+    placeBid,
+    offerTrade,
+    getOffer,
 }

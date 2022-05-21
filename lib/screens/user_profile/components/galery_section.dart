@@ -71,7 +71,7 @@ class GalerySection extends StatelessWidget {
             ),
             itemBuilder: (context, index) => Container(
               color: kPrimaryColor,
-              child: Image.asset(
+              child: Image.network(
                 galeryImages[index],
               ),
             ),

@@ -7,6 +7,8 @@ import 'package:plant_trading_app/screens/home/components/post_card.dart';
 import 'package:plant_trading_app/screens/home/components/title_with_more_btn.dart';
 
 import '../../../models/Post.dart';
+import '../../bidding_details/bidding_details_screen.dart';
+import '../../trading_details/trading_details_screen.dart';
 import 'header_with_searchbox.dart';
 import 'title_with_more_btn.dart';
 
@@ -37,9 +39,9 @@ class _BodyState extends State<Body> {
       child: Column(
         children: <Widget>[
           HeaderWithSearchBox(size: size),
-          TitleWithMoreBtn(title: "Popular Auctions ", press: () {}),
+          TitleWithMoreBtn(title: "Popular Nearby", press: () {}),
           RecommendsPlants(),
-          TitleWithMoreBtn(title: "Trending Trades", press: () {}),
+          TitleWithMoreBtn(title: "Your Feed", press: () {}),
           // Expanded(
           //   child: ListView.builder(
           //     itemCount: postsData.length,
@@ -57,7 +59,15 @@ class _BodyState extends State<Body> {
                     posts.add(
                       PostCard(
                         post: post,
-                        press: () {},
+                        press: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => post.type.toString() ==
+                                          'BIDDING'
+                                      ? BiddingDetailsScreen(postId: post.id)
+                                      : TradingDetailsScreen(postId: post.id)));
+                        },
                       ),
                     )
                   },

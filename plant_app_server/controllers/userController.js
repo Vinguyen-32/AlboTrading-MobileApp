@@ -36,28 +36,45 @@ const getUser = async (req, res) => {
     });
     const user = users[0];
 
+    const bidCount = await DB.Post.count({
+      where: {
+        type: "BIDDING"
+      }
+    });
 
-    const mock = {
-      profileImage: "assets/images/img1.jpg",
-      name: "Vi Nguyen",
-      accountName: "samvi32",
+    const tradeCount =  await DB.Post.count({
+      where: {
+        type: "TRADING"
+      }
+    });
+
+
+
+    const postImages = await DB.Post.findAll({
+      attributes: ["images"]
+    });
+
+    let galeryImages = [];
+    postImages.map((imgs) => { 
+      galeryImages.push(...imgs.images)
+    })
+
+
+    const result = {
+      profileImage: `${user.image}`,
+      name: `${user.firstName} ${user.lastName}`,
+      accountName: `${user.username}`,
       followers: 190,
       following: 32,
       reviews: 23,
       stars: 5,
-      trade: 6,
-      bid: 4,
-      galeryImages: [
-        "assets/images/img.png",
-        "assets/images/img1.jpg",
-        "assets/images/img2.png",
-        "assets/images/img3.png",
-        "assets/images/img4.png",
-      ],
+      trade: tradeCount,
+      bid: bidCount,
+      galeryImages,
       newPostImage: []
     }
-
-    res.send(mock);
+console.log(result)
+    res.send(result);
   } catch (error) {
     res.status(400).send(error.message);
   }

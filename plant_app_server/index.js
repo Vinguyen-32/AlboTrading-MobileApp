@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 app.use('/api', userRoutes);
 app.use('/api', postRoutes);

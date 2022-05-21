@@ -9,7 +9,24 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
 
 class AuctionDetails extends StatefulWidget {
-  const AuctionDetails({Key? key}) : super(key: key);
+  final TextEditingController titleBoxController;
+  final TextEditingController priceBoxController;
+  final TextEditingController descriptionBoxController;
+  final Function setDurationOption;
+  final Function setLocationOption;
+  final Function setShippingOption;
+  final Function setSelectedImages;
+
+  const AuctionDetails({
+    Key? key,
+    required this.titleBoxController,
+    required this.priceBoxController,
+    required this.descriptionBoxController,
+    required this.setDurationOption,
+    required this.setLocationOption,
+    required this.setShippingOption,
+    required this.setSelectedImages,
+  }) : super(key: key);
 
   @override
   _AuctionDetailsState createState() => _AuctionDetailsState();
@@ -31,71 +48,71 @@ class _AuctionDetailsState extends State<AuctionDetails> {
             children: <Widget>[
               _imageList!.length == 0
                   ? Column(children: [
-                photoTextField(press: selectImages),
-                SizedBox(
-                  height: 20,
-                ),
-              ])
-                  : Column(
-                children: [
-                  Container(
-                    height: 101,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          ..._imageList.map((i) {
-                            return Builder(
-                                builder: (BuildContext context) {
-                                  return Container(
-                                    height: 100,
-                                    child: Row(
-                                      children: [
-                                        Image.file(File(i.path)),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                });
-                          }).toList(),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 1.0),
-                            child: Column(children: [
-                              photoTextField(press: selectImages),
-                            ]),
-                          )
-                        ],
+                      photoTextField(press: selectImages),
+                      SizedBox(
+                        height: 20,
                       ),
+                    ])
+                  : Column(
+                      children: [
+                        Container(
+                          height: 101,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                ..._imageList.map((i) {
+                                  return Builder(
+                                      builder: (BuildContext context) {
+                                    return Container(
+                                      height: 100,
+                                      child: Row(
+                                        children: [
+                                          Image.file(File(i.path)),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  });
+                                }).toList(),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 1.0),
+                                  child: Column(children: [
+                                    photoTextField(press: selectImages),
+                                  ]),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        )
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  )
-                ],
-              ),
-              titleTextField(),
+              titleTextField(widget.titleBoxController),
               SizedBox(
                 height: 20,
               ),
-              priceTextField(),
+              priceTextField(widget.priceBoxController),
               SizedBox(
                 height: 20,
               ),
-              DurationTextField(),
+              DurationTextField(setDurationOption: widget.setDurationOption),
               SizedBox(
                 height: 20,
               ),
-              LocationTextField(),
+              LocationTextField(setLocationOption: widget.setLocationOption),
               SizedBox(
                 height: 20,
               ),
-              ShippingTextField(),
+              ShippingTextField(setShippingOption: widget.setShippingOption),
               SizedBox(
                 height: 20,
               ),
-              descriptionTextField(),
+              descriptionTextField(widget.descriptionBoxController),
               SizedBox(
                 height: 20,
               ),
@@ -128,6 +145,7 @@ class _AuctionDetailsState extends State<AuctionDetails> {
       setState(() {
         // _imageList.clear();
         _imageList.addAll(selectedImages);
+        widget.setSelectedImages(_imageList);
       });
     }
   }
@@ -177,9 +195,10 @@ class photoTextField extends StatelessWidget {
   }
 }
 
-Widget titleTextField() {
+Widget titleTextField(TextEditingController _controller) {
   return Flexible(
     child: TextFormField(
+      controller: _controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderSide: BorderSide(
@@ -198,9 +217,9 @@ Widget titleTextField() {
   );
 }
 
-
-Widget descriptionTextField() {
+Widget descriptionTextField(TextEditingController _controller) {
   return TextFormField(
+    controller: _controller,
     decoration: InputDecoration(
       border: OutlineInputBorder(
         borderSide: BorderSide(
@@ -221,9 +240,10 @@ Widget descriptionTextField() {
   );
 }
 
-Widget priceTextField() {
+Widget priceTextField(TextEditingController _controller) {
   return Flexible(
     child: TextFormField(
+      controller: _controller,
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.digitsOnly
@@ -256,7 +276,9 @@ Widget priceTextField() {
 }
 
 class LocationTextField extends StatefulWidget {
-  const LocationTextField({Key? key}) : super(key: key);
+  final Function setLocationOption;
+
+  const LocationTextField({Key? key, required this.setLocationOption}) : super(key: key);
 
   @override
   State<LocationTextField> createState() => _LocationTextFieldState();
@@ -293,10 +315,15 @@ class _LocationTextFieldState extends State<LocationTextField> {
       onChanged: (String? newValue) {
         setState(() {
           dropdownValue = newValue!;
+          widget.setLocationOption(newValue);
         });
       },
-      items: <String>['Not Available', 'Public Meetup', "Seller's Door Pickup", "Buyer's Door Dropoff"]
-          .map<DropdownMenuItem<String>>((String value) {
+      items: <String>[
+        'Not Available',
+        'Public Meetup',
+        "Seller's Door Pickup",
+        "Buyer's Door Dropoff"
+      ].map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
@@ -307,7 +334,9 @@ class _LocationTextFieldState extends State<LocationTextField> {
 }
 
 class ShippingTextField extends StatefulWidget {
-  const ShippingTextField({Key? key}) : super(key: key);
+  final Function setShippingOption;
+
+  const ShippingTextField({Key? key, required this.setShippingOption}) : super(key: key);
 
   @override
   State<ShippingTextField> createState() => _ShippingTextFieldState();
@@ -344,10 +373,14 @@ class _ShippingTextFieldState extends State<ShippingTextField> {
       onChanged: (String? newValue) {
         setState(() {
           dropdownValue = newValue!;
+          widget.setShippingOption(newValue);
         });
       },
-      items: <String>['Not Available', 'Free Economy Shipping', "Buyer Pays for Shipping"]
-          .map<DropdownMenuItem<String>>((String value) {
+      items: <String>[
+        'Not Available',
+        'Free Economy Shipping',
+        "Buyer Pays for Shipping"
+      ].map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
@@ -358,7 +391,9 @@ class _ShippingTextFieldState extends State<ShippingTextField> {
 }
 
 class DurationTextField extends StatefulWidget {
-  const DurationTextField({Key? key}) : super(key: key);
+  final Function setDurationOption;
+
+  const DurationTextField({Key? key, required this.setDurationOption}) : super(key: key);
 
   @override
   State<DurationTextField> createState() => _DurationTextFieldState();
@@ -395,6 +430,7 @@ class _DurationTextFieldState extends State<DurationTextField> {
       onChanged: (String? newValue) {
         setState(() {
           dropdownValue = newValue!;
+          widget.setDurationOption(newValue);
         });
       },
       items: <String>['1 Day', '3 Days', '1 Week', '10 Days']

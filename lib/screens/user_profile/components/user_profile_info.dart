@@ -22,7 +22,7 @@ class UserProfileInfo extends StatelessWidget {
             child: Row(
               children: [
                 ClipOval(
-                  child: Image.asset(
+                  child: Image.network(
                     userProfile.profileImage,
                     // 'assets/images/img.png',
                     height: 100,
@@ -36,7 +36,7 @@ class UserProfileInfo extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        userProfile.firstName + " " + userProfile.lastName,
+                        userProfile.name,
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w600,

@@ -8,8 +8,25 @@ import 'package:plant_trading_app/screens/trade_listing/components/user_account.
 import '../../../constants.dart';
 import 'auction_details.dart';
 
-
 class Body extends StatelessWidget {
+  final TextEditingController _titleBoxController;
+  final TextEditingController _priceBoxController;
+  final TextEditingController _descriptionBoxController;
+  final Function setDurationOption;
+  final Function setLocationOption;
+  final Function setShippingOption;
+  final Function setSelectedImages;
+
+  Body(
+    this._titleBoxController,
+    this._priceBoxController,
+    this._descriptionBoxController,
+    this.setDurationOption,
+    this.setLocationOption,
+    this.setShippingOption,
+    this.setSelectedImages,
+  );
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -36,7 +53,15 @@ class Body extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 UserAccount(),
-                AuctionDetails(),
+                AuctionDetails(
+                  titleBoxController: _titleBoxController,
+                  priceBoxController: _priceBoxController,
+                  descriptionBoxController: _descriptionBoxController,
+                  setDurationOption: setDurationOption,
+                  setLocationOption: setLocationOption,
+                  setShippingOption: setShippingOption,
+                  setSelectedImages: setSelectedImages,
+                ),
               ],
             ),
           ),

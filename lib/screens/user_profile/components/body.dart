@@ -14,10 +14,6 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    Size size = MediaQuery.of(context).size;
-    // UserProfile userProfileData = DataProvider().getUserProfileData();
-
     return SingleChildScrollView(
         child: Column(
           children: [

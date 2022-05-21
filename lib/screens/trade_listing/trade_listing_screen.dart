@@ -1,18 +1,49 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:plant_trading_app/models/DataProvider.dart';
+import '../../models/UserProfile.dart';
+import '../user_profile/user_profile_screen.dart';
 import 'components/body.dart';
 
 import '../../../constants.dart';
 
-class TradeListingScreen extends StatelessWidget {
+class TradeListingScreen extends StatefulWidget {
+  const TradeListingScreen({
+    Key? key,
+    required this.currentUser,
+  }) : super(key: key);
+
+  final UserProfile currentUser;
+  // AuctionListingScreen({this.currentUser});
+
+  @override
+  State<TradeListingScreen> createState() => _TradeListingScreenState();
+}
+
+class _TradeListingScreenState extends State<TradeListingScreen> {
+  bool isPosting = false;
+
+  final TextEditingController _titleBoxController = TextEditingController();
+  final TextEditingController _descriptionBoxController = TextEditingController();
+  String locationOption = '';
+  String shippingOption = '';
+  List<XFile> selectedImages = [];
+
+  void setLocationOption(String value) {
+    locationOption = value;
+  }
+
+  void setShippingOption(String value) {
+    shippingOption = value;
+  }
+
+  void setSelectedImages(List<XFile> value) {
+    selectedImages = value;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
-    List postData = DataProvider().getPostData();
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -45,7 +76,7 @@ class TradeListingScreen extends StatelessWidget {
         // ],
         actions: <Widget>[
           TextButton(
-            onPressed: () {},
+            onPressed: isPosting ? null : () => handleSubmit(),
             child: Text(
               "Post",
               style: TextStyle(
@@ -55,10 +86,46 @@ class TradeListingScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: kDefaultPadding / 2,),
+          SizedBox(
+            width: kDefaultPadding / 2,
+          ),
         ],
       ),
-      body: Body(),
+      body: Body(
+        _titleBoxController,
+        _descriptionBoxController,
+        setLocationOption,
+        setShippingOption,
+        setSelectedImages,
+      ),
+    );
+  }
+
+  handleSubmit() {
+    setState(() {
+      isPosting = true;
+    });
+
+    Future.wait([
+      DataProvider().createPost(
+        _titleBoxController.text,
+        'TRADDING',
+        '',
+        _descriptionBoxController.text,
+        selectedImages,
+        '',
+        locationOption,
+        shippingOption,
+      )
+    ]);
+
+    setState(() {
+      isPosting = false;
+    });
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => UserProfileScreen()),
     );
   }
 }

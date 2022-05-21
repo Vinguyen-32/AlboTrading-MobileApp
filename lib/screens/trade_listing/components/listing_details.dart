@@ -9,7 +9,20 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
 
 class ListingDetails extends StatefulWidget {
-  const ListingDetails({Key? key}) : super(key: key);
+  final TextEditingController titleBoxController;
+  final TextEditingController descriptionBoxController;
+  final Function setLocationOption;
+  final Function setShippingOption;
+  final Function setSelectedImages;
+
+  const ListingDetails({
+    Key? key,
+    required this.titleBoxController,
+    required this.descriptionBoxController,
+    required this.setLocationOption,
+    required this.setShippingOption,
+    required this.setSelectedImages,
+  }) : super(key: key);
 
   @override
   _ListingDetailsState createState() => _ListingDetailsState();
@@ -75,19 +88,19 @@ class _ListingDetailsState extends State<ListingDetails> {
                         )
                       ],
                     ),
-              titleTextField(),
+              titleTextField(widget.titleBoxController),
               SizedBox(
                 height: 20,
               ),
-              LocationTextField(),
+              LocationTextField(setLocationOption: widget.setLocationOption),
               SizedBox(
                 height: 20,
               ),
-              ShippingTextField(),
+              ShippingTextField(setShippingOption: widget.setShippingOption),
               SizedBox(
                 height: 20,
               ),
-              descriptionTextField(),
+              descriptionTextField(widget.descriptionBoxController),
               SizedBox(
                 height: 20,
               ),
@@ -120,6 +133,7 @@ class _ListingDetailsState extends State<ListingDetails> {
       setState(() {
         // _imageList.clear();
         _imageList.addAll(selectedImages);
+        widget.setSelectedImages(_imageList);
       });
     }
   }
@@ -169,9 +183,10 @@ class photoTextField extends StatelessWidget {
   }
 }
 
-Widget titleTextField() {
+Widget titleTextField(TextEditingController _controller) {
   return Flexible(
     child: TextFormField(
+      controller: _controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderSide: BorderSide(
@@ -191,8 +206,9 @@ Widget titleTextField() {
 }
 
 
-Widget descriptionTextField() {
+Widget descriptionTextField(TextEditingController _controller) {
   return TextFormField(
+    controller: _controller,
     decoration: InputDecoration(
       border: OutlineInputBorder(
         borderSide: BorderSide(
@@ -215,7 +231,9 @@ Widget descriptionTextField() {
 
 
 class LocationTextField extends StatefulWidget {
-  const LocationTextField({Key? key}) : super(key: key);
+  final Function setLocationOption;
+
+  const LocationTextField({Key? key, required this.setLocationOption}) : super(key: key);
 
   @override
   State<LocationTextField> createState() => _LocationTextFieldState();
@@ -252,6 +270,7 @@ class _LocationTextFieldState extends State<LocationTextField> {
       onChanged: (String? newValue) {
         setState(() {
           dropdownValue = newValue!;
+          widget.setLocationOption(newValue);
         });
       },
       items: <String>['Not Available', 'Public Meetup', "Seller's Door Pickup", "Buyer's Door Dropoff"]
@@ -266,7 +285,9 @@ class _LocationTextFieldState extends State<LocationTextField> {
 }
 
 class ShippingTextField extends StatefulWidget {
-  const ShippingTextField({Key? key}) : super(key: key);
+  final Function setShippingOption;
+
+  const ShippingTextField({Key? key, required this.setShippingOption}) : super(key: key);
 
   @override
   State<ShippingTextField> createState() => _ShippingTextFieldState();
@@ -303,6 +324,7 @@ class _ShippingTextFieldState extends State<ShippingTextField> {
       onChanged: (String? newValue) {
         setState(() {
           dropdownValue = newValue!;
+          widget.setShippingOption(newValue);
         });
       },
       items: <String>['Not Available', 'Free Economy Shipping', "Buyer Pays for Shipping"]

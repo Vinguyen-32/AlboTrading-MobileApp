@@ -6,5 +6,6 @@ module.exports.define = function (sequelize, DataTypes) {
         time: DataTypes.DATE,
         images: DataTypes.JSON,
         isActive: DataTypes.BOOLEAN,
+        data: DataTypes.JSON,
     });
   }

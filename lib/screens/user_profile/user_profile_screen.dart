@@ -27,6 +27,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return FutureBuilder<UserProfile>(
       future: futureCurrentUser,
       builder: (context, snapshot) {
@@ -39,7 +40,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               leading: Padding(
                 padding: const EdgeInsets.only(left: 20, top: 20),
                 child: Text(
-                  '@' + (user!.username ?? ''),
+                  '@' + (user!.accountName ?? ''),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 17,
@@ -177,7 +178,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TradeListingScreen(),
+              builder: (context) => TradeListingScreen(currentUser: user),
             ),
           ),
         ),

@@ -37,7 +37,7 @@ class PostCard extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 24,
-                          backgroundImage: NetworkImage(post.profileImage)//AssetImage(post.image),
+                          backgroundImage: NetworkImage(post.image)//AssetImage(post.image),
                         ),
                         if(post.isActive)
                           Positioned(
@@ -65,45 +65,28 @@ class PostCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              post.username,
+                              post.name,
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w300,
                               ),
                             ),
                             SizedBox(
                               height: 6,
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  post.location,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Text(
-                                  post.time,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              post.location,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w100,
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    // Text(
-                    //   post.time,
-                    //   style: TextStyle(
-                    //     fontSize: 14,
-                    //     fontWeight: FontWeight.w400,
-                    //   ),
-                    // ),
+                    Text(post.time),
                   ],
                 ),
               ],
@@ -143,7 +126,7 @@ class PostCard extends StatelessWidget {
                   color: kPrimaryColor,
                   onPressed: press,
                   child: Text(
-                    "Start Bidding",
+                    post.type == "BIDDING" ? "Start Bidding" : "Start Trading",
                     style: TextStyle(color: Colors.white, fontSize: 15),
                   ),
                 ),

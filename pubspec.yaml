@@ -40,6 +40,7 @@ dependencies:
   get: ^3.23.1
   http: 0.13.4
   timeago: ^3.2.2
+  intl: ^0.17.0
 
 
 

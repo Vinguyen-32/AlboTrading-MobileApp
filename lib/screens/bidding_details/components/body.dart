@@ -5,12 +5,18 @@ import 'package:plant_trading_app/screens/bidding_details/components/post_contai
 
 import 'package:plant_trading_app/models/DataProvider.dart';
 
+import '../../../models/Post.dart';
+
 class Body extends StatelessWidget {
+  final Post post;
+
+  const Body({
+    Key? key,
+    required this.post,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    Size size = MediaQuery.of(context).size;
-    List postData = DataProvider().getPostData();
     return SingleChildScrollView(
       child: Column(children: <Widget>[
         Container(
@@ -19,12 +25,12 @@ class Body extends StatelessWidget {
           color: Colors.white,
           child: Column(
             children: [
-              PostContainer(post: postData[1]),
+              PostContainer(post: post),
               SizedBox(height: 10),
               const Divider(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: PostBiddingSection(post: postData[1]),
+                child: PostBiddingSection(post: post),
               ),
             ],
           ),
