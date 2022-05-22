@@ -66,13 +66,14 @@ class GalerySection extends StatelessWidget {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               childAspectRatio: 1 / 1,
-              crossAxisSpacing: 2,
-              mainAxisSpacing: 2,
+              crossAxisSpacing: 2.5,
+              mainAxisSpacing: 2.5,
             ),
             itemBuilder: (context, index) => Container(
               color: kPrimaryColor,
               child: Image.network(
                 galeryImages[index],
+                fit: BoxFit.cover,
               ),
             ),
             itemCount: galeryImages.length,

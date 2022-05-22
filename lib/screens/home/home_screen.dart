@@ -3,6 +3,7 @@ import 'package:plant_trading_app/constants.dart';
 import 'package:plant_trading_app/screens/home/components/body.dart';
 import 'package:plant_trading_app/components/my_bottom_nav_bar.dart';
 import 'package:plant_trading_app/screens/user_profile/user_profile_screen.dart';
+import '../../globals.dart' as globals;
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -62,13 +63,21 @@ class HomeScreen extends StatelessWidget {
             ),
             color: Colors.transparent,
             child: ClipOval(
-              child: Image.asset(
-                // userProfile.profileImage,
-                'assets/images/img.png',
-                height: 43,
-                width: 43,
-                fit: BoxFit.cover,
-              ),
+              child: globals.avatar != null && globals.avatar != ""
+                  ? Image.network(
+                      // userProfile.profileImage,
+                      globals.avatar,
+                      height: 43,
+                      width: 43,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset(
+                      // userProfile.profileImage,
+                      'assets/images/img.png',
+                      height: 43,
+                      width: 43,
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
         ),
@@ -76,4 +85,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-

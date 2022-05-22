@@ -51,8 +51,6 @@ class _AuctionListingScreenState extends State<AuctionListingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    List postData = DataProvider().getPostData();
 
     return Scaffold(
       appBar: AppBar(
@@ -137,6 +135,7 @@ class _AuctionListingScreenState extends State<AuctionListingScreen> {
         durationOption,
         locationOption,
         shippingOption,
+        _priceBoxController.text
       )
     ]);
 

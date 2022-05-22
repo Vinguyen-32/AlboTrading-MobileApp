@@ -20,7 +20,7 @@ class PostCard extends StatelessWidget {
       onTap: press,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: kDefaultPadding,
+          horizontal: kDefaultPadding,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,11 +35,18 @@ class PostCard extends StatelessWidget {
                   children: [
                     Stack(
                       children: [
-                        CircleAvatar(
-                          radius: 24,
-                          backgroundImage: NetworkImage(post.image)//AssetImage(post.image),
-                        ),
-                        if(post.isActive)
+                        post.avatar == "" || post.avatar == "null"
+                            ? CircleAvatar(
+                                radius: 24,
+                                backgroundImage: AssetImage(
+                                    'assets/images/img.png') //AssetImage(post.image),
+                                )
+                            : CircleAvatar(
+                                radius: 24,
+                                backgroundImage: NetworkImage(
+                                    post.avatar) //AssetImage(post.image),
+                                ),
+                        if (post.isActive)
                           Positioned(
                             right: 0,
                             bottom: 0,
@@ -50,7 +57,8 @@ class PostCard extends StatelessWidget {
                                 color: kPrimaryColor,
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: Theme.of(context).scaffoldBackgroundColor,
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
                                   width: 2,
                                 ),
                               ),
@@ -60,33 +68,47 @@ class PostCard extends StatelessWidget {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2,),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: kDefaultPadding / 2,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               post.name,
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w300,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                             SizedBox(
                               height: 6,
                             ),
-                            Text(
-                              post.location,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w100,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  post.location,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Spacer(),
+                                Text(
+                                  post.time,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Text(post.time),
+                    // Text(post.time),
                   ],
                 ),
               ],
@@ -103,19 +125,17 @@ class PostCard extends StatelessWidget {
                 viewportFraction: 1,
                 enlargeStrategy: CenterPageEnlargeStrategy.scale,
               ),
-              items:
-              post.postImages?.map((i) {
-                return Builder(
-                    builder: (BuildContext context) {
-                      return ClipRRect(
-                          child: Image.network(i),
-                          borderRadius: BorderRadius.circular(8)
-                      );
-                    }
-                );
+              items: post.postImages?.map((i) {
+                return Builder(builder: (BuildContext context) {
+                  return ClipRRect(
+                      child: Image.network(i),
+                      borderRadius: BorderRadius.circular(8));
+                });
               }).toList(),
             ),
-            SizedBox(height: kDefaultPadding,),
+            SizedBox(
+              height: kDefaultPadding,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

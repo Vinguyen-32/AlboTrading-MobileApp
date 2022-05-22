@@ -10,7 +10,11 @@ import '../../bidding_details/bidding_details_screen.dart';
 import '../../trading_details/trading_details_screen.dart';
 
 class RoundShortcutPost extends StatefulWidget {
-  const RoundShortcutPost({Key? key}) : super(key: key);
+  final String userId;
+  const RoundShortcutPost({
+    Key? key,
+    required this.userId,
+  }) : super(key: key);
 
   @override
   RoundShortcutPostState createState() => RoundShortcutPostState();
@@ -22,7 +26,7 @@ class RoundShortcutPostState extends State<RoundShortcutPost> {
   @override
   void initState() {
     super.initState();
-    futurePost = DataProvider().getPostData2();
+    futurePost = DataProvider().getPostData2(widget.userId);
   }
 
   @override
@@ -91,9 +95,9 @@ class RoundShortcutPostState extends State<RoundShortcutPost> {
                   const SizedBox(
                     height: 4,
                   ),
-                  Text(post.caption.length <= 10
-                      ? post.caption
-                      : (post.caption.substring(0, 10) + "...")),
+                  Text(post.title.length <= 10
+                      ? post.title
+                      : (post.title.substring(0, 10) + "...")),
                 ],
               ))
             },

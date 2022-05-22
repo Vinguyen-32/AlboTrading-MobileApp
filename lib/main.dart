@@ -2,9 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:plant_trading_app/constants.dart';
 import 'package:plant_trading_app/screens/home/home_screen.dart';
+import 'package:plant_trading_app/screens/login/login_screen.dart';
 import 'package:plant_trading_app/screens/new_post/new_post_screen.dart';
+import 'package:plant_trading_app/screens/signup/signup_screen.dart';
 import 'package:plant_trading_app/screens/user_profile/user_profile_screen.dart';
 import 'package:plant_trading_app/helper/dependencies.dart' as dep;
+import 'package:plant_trading_app/screens/welcome/welcome_screen.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +29,8 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       // home: HomeScreen(),
-      home: UserProfileScreen(),
+      // home: UserProfileScreen(),
+      home: WelcomeScreen(),
       // home: NewPostScreen(),
     );
   }

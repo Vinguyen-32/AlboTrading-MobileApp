@@ -7,6 +7,7 @@ import 'package:plant_trading_app/screens/home/components/post_card.dart';
 import 'package:plant_trading_app/screens/home/components/title_with_more_btn.dart';
 
 import '../../../models/Post.dart';
+import '../../../globals.dart' as globals;
 import '../../bidding_details/bidding_details_screen.dart';
 import '../../trading_details/trading_details_screen.dart';
 import 'header_with_searchbox.dart';
@@ -25,7 +26,7 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    futurePosts = DataProvider().getPostData2();
+    futurePosts = DataProvider().getFeed(globals.id);
   }
 
   @override

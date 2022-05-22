@@ -10,8 +10,10 @@ class Post {
       type,
       id,
       author,
+      authorId,
       avatar,
       endAt,
+  title,
       durationOption,
       locationOption,
       shippingOption;
@@ -35,6 +37,8 @@ class Post {
     this.durationOption = '',
     this.locationOption = '',
     this.shippingOption = '',
+    this.authorId = '',
+    this.title = '',
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -57,6 +61,8 @@ class Post {
       durationOption: json['durationOption'] ?? '',
       locationOption: json['locationOption'] ?? '',
       shippingOption: json['shippingOption'] ?? '',
+      title: json['title'] ?? '',
+      authorId: json['UserId'].toString(),
     );
   }
 }

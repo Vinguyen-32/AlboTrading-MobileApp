@@ -109,13 +109,14 @@ class _TradeListingScreenState extends State<TradeListingScreen> {
     Future.wait([
       DataProvider().createPost(
         _titleBoxController.text,
-        'TRADDING',
+        'TRADING',
         '',
         _descriptionBoxController.text,
         selectedImages,
         '',
         locationOption,
         shippingOption,
+        '',
       )
     ]);
 

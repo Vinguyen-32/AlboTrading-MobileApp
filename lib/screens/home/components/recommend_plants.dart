@@ -40,13 +40,14 @@ class _RecommendsPlantsState extends State<RecommendsPlants> {
                 ...snapshot.data!.map((post){
                   return RecommendPlantCard(
                     image: post.image,
-                    plantName: post.plantName,
+                    plantName: post.title,
                     account: post.author,
                     type: post.type as String,
                     id: post.id,
                     press: () {
                       print("post.type.toString(): " + post.type.toString());
                       if (post.type.toString() == "TRADING") {
+                        print("before click 2: " + post.id.toString());
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -117,7 +118,7 @@ class RecommendPlantCard extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(image),
+                image: NetworkImage(image),
               ),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),

@@ -19,7 +19,7 @@ class Body extends StatelessWidget {
           children: [
             UserProfileInfo(userProfile: userProfileData,),
             SizedBox(height: 12),
-            RoundShortcutPost(),
+            RoundShortcutPost(userId: userProfileData.id),
             SizedBox(height: 24),
             GalerySection(userProfileData),
           ],

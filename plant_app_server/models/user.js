@@ -4,7 +4,7 @@ module.exports.define = function (sequelize, DataTypes) {
       unique: true,
       type: DataTypes.STRING,
     },
-    birthday: DataTypes.DATE,
+    password: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     ratingstar: DataTypes.INTEGER,

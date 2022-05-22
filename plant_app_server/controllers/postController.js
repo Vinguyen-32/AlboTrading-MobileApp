@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 const _ = require('lodash');
-const host = 'http://192.168.1.17:8080';
+const host = 'http://192.168.1.14:8080';
 
 
 const createPost = async (req, res) => {
@@ -16,6 +16,8 @@ const createPost = async (req, res) => {
         const location = fields['location'][0];
         const title = fields['title'][0];
         const caption = fields['caption'][0];
+        const price = fields['price'][0];
+
 
         let filenames = [];
 
@@ -36,6 +38,11 @@ const createPost = async (req, res) => {
             location,
             title,
             caption,
+            data: {
+                basePrice: Number(price),
+                currency: "USD",
+                minimumBid: 10
+            },
             images: filenames.map((item) => { return `${host}/${item}`}),
             time: new Date(),
             isActive: true,
@@ -106,7 +113,7 @@ const getPosts = async (req, res) => {
         const { id, postId } = req.params || {};
         let posts = await DB.Post.findAll({
             where: {
-                UserId: 2
+                UserId: id
             }
         });
 
@@ -122,6 +129,36 @@ const getPosts = async (req, res) => {
             return post;
         })
         console.log("possss: " + JSON.stringify(posts, null, 4))
+        res.send(posts);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const getFeeds = async (req, res) => {
+    try {
+        const { id, postId } = req.params || {};
+        let posts = await DB.Post.findAll({
+            include: [{
+                model: DB.User
+            }],
+            order: [
+                ['id', 'DESC'],
+            ]
+        });
+
+        const user = await DB.User.findAll({
+            where: {
+                id
+            }
+        })
+
+        posts = posts.map((post) => {
+            post = JSON.parse(JSON.stringify(post));
+            post.name = `${post.User.firstName} ${post.User.lastName}`;
+            post.avatar = post.User.image;
+            return post;
+        })
         res.send(posts);
     } catch (error) {
         res.status(400).send(error.message);
@@ -153,38 +190,27 @@ const getNearbyPosts = async (req, res) => {
     try {
         const { id, postId } = req.params || {};
         const posts = await DB.Post.findAll({
-            where: {
-                UserId: id
-            }
+            include: [{
+                model: DB.User
+            }]
         });
 
-        const mock = [{
-            plantName: "Snake Plant",
-            author: "Jenny",
-            image: "assets/images/img.png",
-            time: new Date(),
-            price: 0,
-            type: "TRADING",
-            isLocal: true,
-        }, {
-            plantName: "Florida Beauty",
-            author: "Sam",
-            image: "assets/images/img4.png",
-            time: new Date(),
-            price: 500,
-            type: "BIDDING",
-            isLocal: true,
-        }, {
-            plantName: "Clarinervium",
-            author: "Chloe",
-            image: "assets/images/img3.png",
-            time: new Date(),
-            price: 0,
-            type: "TRADING",
-            isLocal: true,
-        }]
-        res.send(mock);
+        const result = posts.map((item) => {
+            return {
+                id: item.id,
+                title: item.title,
+                plantName: item.caption,
+                author: `${item.User.firstName} ${item.User.lastName}`,
+                image: item.images[0],
+                time: item.time,
+                price: _.get(item, "data.basePrice") || 0,
+                type: item.type,
+                isLocal: true,
+            }
+        })
+        res.send(result);
     } catch (error) {
+        console.log(error);
         res.status(400).send(error.message);
     }
 }
@@ -299,10 +325,10 @@ const getOffer = async (req, res) => {
 
         let result = JSON.parse(JSON.stringify(offers));
         result.map((item, i) => {
-            result[i].name = `${item.User.firstName} ${item.User.lastName}`
+            result[i].name = `${item.User.firstName} ${item.User.lastName}`;
             delete result[i].User;
         })
-
+        
         res.send(result);
     } catch (error) {
 
@@ -322,4 +348,5 @@ module.exports = {
     placeBid,
     offerTrade,
     getOffer,
+    getFeeds,
 }

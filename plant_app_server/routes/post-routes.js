@@ -9,12 +9,15 @@ const {
     getPopularPosts,
     placeBid,
     offerTrade,
-    getOffer
+    getOffer,
+    getFeeds,
 } = require('../controllers/postController');
 
 const router = express.Router();
 
 router.get('/users/:id/posts', getPosts);
+
+router.get('/users/:id/feeds', getFeeds);
 
 router.get('/users/:id/posts/near_by', getNearbyPosts);
 

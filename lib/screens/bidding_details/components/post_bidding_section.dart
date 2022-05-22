@@ -32,6 +32,13 @@ class PostBiddingSectionState extends State<PostBiddingSection> {
     super.dispose();
   }
 
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
+
   @override
   Widget build(BuildContext context) {
     Post post = widget.post;
@@ -42,7 +49,8 @@ class PostBiddingSectionState extends State<PostBiddingSection> {
     int minsTillEnd = duration.inMinutes % 60;
 
     setState(() {
-      currentPrice = double.parse(widget.post.price);
+      if (isNumeric(widget.post.price))
+        currentPrice = double.parse(widget.post.price);
     });
 
     return Column(
